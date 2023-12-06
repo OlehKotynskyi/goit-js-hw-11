@@ -1,1 +1,124 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  //  display: block;
+  //  width: 100%;
+  //  min-height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
+
+button,
+input {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+main {
+  flex-grow: 1;
+}
+
+.button {
+  display: inline-block;
+  width: 150px;
+  height: 40px;
+  border-radius: 9999px;
+  background-color: #fff;
+  border: 1px solid #03045e;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease-in;
+  z-index: 1;
+  border: none;
+  color: inherit;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 100%;
+    transform: skew(15deg);
+    transition: all 0.5s;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  &::before {
+    left: -10px;
+    background-color: #240046;
+  }
+
+  &::after {
+    right: -10px;
+    background-color: #5a189a;
+  }
+
+  &:hover::before,
+  &:hover::after {
+    width: 58%;
+  }
+
+  &:hover span {
+    color: #e0aaff;
+    transition: 0.3s;
+  }
+
+  &span {
+    color: #03045e;
+    font-size: 18px;
+    transition: all 0.3s ease-in;
+  }
+}
+
+//.element-animation {
+//  opacity: 0;
+//  transform: translateY(5%);
+//}
+
+//.element-animation.element-show {
+//  opacity: 1;
+//  transform: translateY(0%);
+//  transition: all 0.5s ease-in-out;
+//}

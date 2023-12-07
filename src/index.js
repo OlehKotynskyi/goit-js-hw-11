@@ -15,6 +15,7 @@ const inputElem = document.querySelector('.header__search-input');
 
 handleHeaderScroll();
 let page = 1;
+let lastQuery = '';
 const lightbox = new SimpleLightbox('.photo-card a');
 
 
@@ -38,6 +39,7 @@ async function onSubmit(event) {
    try {
       await generatingImages(inputValue, page);
       inputElem.value = '';
+      lastQuery = inputValue;
    } catch (error) {
       Notiflix.Notify.failure('An error occurred. Please try again.');
    }
@@ -48,7 +50,7 @@ async function onClick() {
    page++;
 
    try {
-      await generatingImages(inputElem.value.trim().toLowerCase(), page);
+      await generatingImages(lastQuery, page);
    } catch (error) {
       Notiflix.Notify.failure('An error occurred. Please try again.');
    }
@@ -65,6 +67,7 @@ async function onKeydown(event) {
       try {
          await generatingImages(inputValue, page);
          inputElem.value = '';
+         lastQuery = inputValue;
       } catch (error) {
          Notiflix.Notify.failure('An error occurred. Please try again.');
       }

@@ -1,23 +1,35 @@
+import { gettingApiImages } from './add-js/pixabayAPI';
 import { handleHeaderScroll } from './add-js/animation';
-import { gettingApiImages, markupImages, smoothScroll } from './add-js/createMarkup';
+import { markupImages } from './add-js/createMarkup';
+import { smoothScroll } from './add-js/scroll';
 import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+
 
 const formElem = document.querySelector('.header__search-form');
 const galleryElem = document.querySelector('.gallery');
 const nextPageButt = document.querySelector('.load-more');
 const inputElem = document.querySelector('.header__search-input');
 
-let page = 1;
+
 handleHeaderScroll();
+let page = 1;
 const lightbox = new SimpleLightbox('.photo-card a');
 
-inputElem.addEventListener('input', (event) => {
-   nextPageButt.style.display = 'none';
-});
 
-formElem.addEventListener('submit', async (event) => {
+inputElem.addEventListener('input', onInput);
+formElem.addEventListener('submit', onSubmit);
+nextPageButt.addEventListener('click', onClick);
+inputElem.addEventListener('keydown', onKeydown);
+
+
+function onInput() {
+   nextPageButt.style.display = 'none';
+}
+
+
+async function onSubmit(event) {
    event.preventDefault();
    const inputValue = inputElem.value.trim().toLowerCase();
    page = 1;
@@ -29,9 +41,10 @@ formElem.addEventListener('submit', async (event) => {
    } catch (error) {
       Notiflix.Notify.failure('An error occurred. Please try again.');
    }
-});
+}
 
-nextPageButt.addEventListener('click', async () => {
+
+async function onClick() {
    page++;
 
    try {
@@ -39,10 +52,10 @@ nextPageButt.addEventListener('click', async () => {
    } catch (error) {
       Notiflix.Notify.failure('An error occurred. Please try again.');
    }
-});
+};
 
 
-inputElem.addEventListener('keydown', async (event) => {
+async function onKeydown(event) {
    if (event.key === 'Enter') {
       event.preventDefault();
       page = 1;
@@ -56,7 +69,8 @@ inputElem.addEventListener('keydown', async (event) => {
          Notiflix.Notify.failure('An error occurred. Please try again.');
       }
    }
-});
+};
+
 
 async function generatingImages(q, page) {
    const data = await gettingApiImages(q, page);
@@ -77,4 +91,5 @@ async function generatingImages(q, page) {
       nextPageButt.style.display = 'none';
       return;
    }
-}
+};
+
